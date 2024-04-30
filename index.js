@@ -47,6 +47,7 @@ async function run() {
       });
       res.send({token});
     });
+
     //middlewires
     const verifyToken = (req, res, next) => {
       const authorization = req?.headers?.authorization;
@@ -81,12 +82,16 @@ async function run() {
       const items = await menuCollection.find({}).toArray();
       res.send(items);
     });
-    //users
+
+    //===========================//
+
+    //users get all users:
     app.get("/users", verifyToken, verifyAdmin, async (req, res) => {
       const users = await userCollection.find({}).toArray();
       // console.log(users)
       res.status(200).send(users);
     });
+// create new user
     app.post("/users", async (req, res) => {
       const isUserExist = await userCollection.findOne({
         email: req.body.email,
@@ -101,6 +106,7 @@ async function run() {
       const createdUser = await userCollection.insertOne(user);
       res.status(201).send(createdUser);
     });
+// check admin user
     app.get("/users/admin/:email", verifyToken, async (req, res) => {
       const email = req.params.email;
       const user = await userCollection.findOne({ email });
@@ -111,6 +117,7 @@ async function run() {
       console.log("admin role:",admin);
       res.send({ admin });
     });
+    // make admin
     app.patch("/users/admin/:id", async (req, res) => {
       const id = req.params.id;
       console.log(id);
@@ -122,6 +129,7 @@ async function run() {
       );
       res.status(200).send(updatedUser);
     });
+    // delete user
     app.delete("/users/:id", async (req, res) => {
       const deletedUser = await userCollection.deleteOne({
         _id: new ObjectId(req.params.id),
