@@ -1,8 +1,6 @@
 const express = require("express");
-// const { register, login } = require('../controllers/auth');
 const {
   signup,
-  login,
   adminCheck,
   updateUser,
   deleteUser,
