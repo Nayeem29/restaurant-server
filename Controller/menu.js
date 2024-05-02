@@ -45,10 +45,10 @@ const updateMenu = async (req, res) => {
   console.log("updated menu:", id);
   const updatedMenu = await Menu.findByIdAndUpdate(id, {
     name: requestedMenu.name,
-    price:requestedMenu.price,
+    price: requestedMenu.price,
     recipe: requestedMenu.price,
-    image:requestedMenu.image,
-    category: requestedMenu.category
+    image: requestedMenu.image,
+    category: requestedMenu.category,
   });
   console.log(updatedMenu);
   res.send(updatedMenu);
